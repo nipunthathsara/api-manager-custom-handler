@@ -17,3 +17,13 @@ endpoint URL property is being set to the custom handler by the velocity templat
 </handler>
 ```
 4. Redeploy the API for changes to get effect.
+
+If you want the handler to be executed only for the chosen APIs, velocity_template.xml should be as follows.
+```
+#if ($apiName == 'admin--test')
+<handler class="org.wso2.CustomHanlder">
+        #set( $pro_endpoints = $endpoint_config.get("production_endpoints"))
+        <property name="productionEndpointAddress" value="$util.escapeXml($pro_endpoints.get("url"))"/>
+</handler>
+#end
+```
